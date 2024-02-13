@@ -2,6 +2,7 @@ package com.luckraw.kwcommerce.controllers;
 
 import com.luckraw.kwcommerce.dto.ProductDTO;
 import com.luckraw.kwcommerce.services.ProductService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -31,7 +32,7 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<ProductDTO> create(@RequestBody ProductDTO productDTO) {
+    public ResponseEntity<ProductDTO> create(@Valid @RequestBody ProductDTO productDTO) {
         ProductDTO dto = service.create(productDTO);
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -42,7 +43,7 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProductDTO> update(@PathVariable Long id, @RequestBody ProductDTO productDTO) {
+    public ResponseEntity<ProductDTO> update(@PathVariable Long id, @Valid @RequestBody ProductDTO productDTO) {
         ProductDTO dto = service.update(id, productDTO);
         return ResponseEntity.ok(dto);
     }
