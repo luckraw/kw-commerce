@@ -1,6 +1,7 @@
 package com.luckraw.kwcommerce.controllers;
 
 import com.luckraw.kwcommerce.dto.ProductDTO;
+import com.luckraw.kwcommerce.dto.ProductMinDTO;
 import com.luckraw.kwcommerce.services.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +28,8 @@ public class ProductController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<ProductDTO>> findAll(Pageable pageable) {
-        Page<ProductDTO> dtos = service.findAll(pageable);
+    public ResponseEntity<Page<ProductMinDTO>> findAll(Pageable pageable) {
+        Page<ProductMinDTO> dtos = service.findAll(pageable);
         return ResponseEntity.ok(dtos);
     }
 

@@ -1,6 +1,7 @@
 package com.luckraw.kwcommerce.services;
 
 import com.luckraw.kwcommerce.dto.ProductDTO;
+import com.luckraw.kwcommerce.dto.ProductMinDTO;
 import com.luckraw.kwcommerce.entities.Product;
 import com.luckraw.kwcommerce.repositories.ProductRepository;
 import com.luckraw.kwcommerce.services.exceptions.DatabaseException;
@@ -29,11 +30,11 @@ public class ProductService {
         return new ProductDTO(product);
     }
 
-    public Page<ProductDTO> findAll(Pageable pageable) {
+    public Page<ProductMinDTO> findAll(Pageable pageable) {
 
         Page<Product> products = repository.findAll(pageable);
 
-        return products.map(x -> new ProductDTO(x));
+        return products.map(x -> new ProductMinDTO(x));
     }
 
     @Transactional
