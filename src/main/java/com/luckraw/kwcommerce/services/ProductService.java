@@ -1,7 +1,9 @@
 package com.luckraw.kwcommerce.services;
 
+import com.luckraw.kwcommerce.dto.CategoryDTO;
 import com.luckraw.kwcommerce.dto.ProductDTO;
 import com.luckraw.kwcommerce.dto.ProductMinDTO;
+import com.luckraw.kwcommerce.entities.Category;
 import com.luckraw.kwcommerce.entities.Product;
 import com.luckraw.kwcommerce.repositories.ProductRepository;
 import com.luckraw.kwcommerce.services.exceptions.DatabaseException;
@@ -81,10 +83,17 @@ public class ProductService {
     }
 
 
-    private void copyDtoToEntity(ProductDTO productDTO, Product product) {
-        product.setName(productDTO.getName());
-        product.setDescription(productDTO.getDescription());
-        product.setPrice(productDTO.getPrice());
-        product.setImgUrl(productDTO.getImgUrl());
+    private void copyDtoToEntity(ProductDTO dto, Product product) {
+        product.setName(dto.getName());
+        product.setDescription(dto.getDescription());
+        product.setPrice(dto.getPrice());
+        product.setImgUrl(dto.getImgUrl());
+
+        product.getCategories().clear();
+        for (CategoryDTO catDto : dto.getCategories()) {
+            Category cat = new Category();
+            cat.setId(catDto.getId());
+            product.getCategories().add(cat);
+        }
     }
 }
