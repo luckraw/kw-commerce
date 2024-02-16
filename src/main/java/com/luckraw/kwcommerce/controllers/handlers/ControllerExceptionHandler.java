@@ -3,6 +3,7 @@ package com.luckraw.kwcommerce.controllers.handlers;
 import com.luckraw.kwcommerce.dto.CustomError;
 import com.luckraw.kwcommerce.dto.ValidationError;
 import com.luckraw.kwcommerce.services.exceptions.DatabaseException;
+import com.luckraw.kwcommerce.services.exceptions.ForbiddenException;
 import com.luckraw.kwcommerce.services.exceptions.ResourceNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -40,6 +41,13 @@ public class ControllerExceptionHandler {
             err.addErrors(f.getField(), f.getDefaultMessage());
         }
 
+        return ResponseEntity.status(status).body(err);
+    }
+
+    @ExceptionHandler(ForbiddenException.class)
+    public ResponseEntity<CustomError> forbidden(ForbiddenException e, HttpServletRequest request) {
+        HttpStatus status = HttpStatus.FORBIDDEN;
+        CustomError err = new CustomError(Instant.now(), status.value(), e.getMessage(), request.getRequestURI());
         return ResponseEntity.status(status).body(err);
     }
 }
